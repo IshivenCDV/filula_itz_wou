@@ -1,0 +1,27 @@
+2.
+select c.contactFirstName, c.contactLastName, count(*) zam
+from customers c join payments p on c.customerNumber=p.customerNumber
+group by c.contactFirstName, c.contactLastName
+
+4.
+a)
+select productName,sum(quantityOrdered*priceEach)ilosc_zam,year(orderDate)rocznik
+		from orderdetails o join products p on o.productCode = p.productCode
+                join orders oo on o.orderNumber = oo.orderNumber
+                where productName = '1968 Ford Mustang' OR productName='1952 Alpine Renault 1300'
+                or productName= '1996 Moto Guzzi 1100i'
+		group by productName,rocznik
+
+b)
+select productName, sum(quantityOrdered*priceEach)ilosc, YEAR(orderdate)rocznik,month(orderDate)msc
+		from products p join orderdetails o on p.productCode = o.productCode
+        	join orders oo on oo.orderNumber = o.orderNumber
+		where productname  like '%harley%'
+		group by productName,rocznik,msc
+
+c)
+select pl.productLine, count(prod.productCode) 
+		from productlines pl
+		inner join products prod on pl.productLine = prod.productLine
+		group by 1
+		having count(prod.productCode) between 11 and 20
